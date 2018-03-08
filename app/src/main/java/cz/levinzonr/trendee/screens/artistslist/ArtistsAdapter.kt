@@ -14,7 +14,7 @@ import de.hdodenhof.circleimageview.CircleImageView
 /**
  * Created by nomers on 3/8/18.
  */
-class ArtistsAdapter(context: Context) : RecyclerView.Adapter<ArtistsAdapter.ViewHolder>(){
+class ArtistsAdapter(val context: Context) : RecyclerView.Adapter<ArtistsAdapter.ViewHolder>(){
     private val inflater : LayoutInflater = LayoutInflater.from(context)
     private val items: ArrayList<Artist> = ArrayList()
     inner class ViewHolder(view:View) : RecyclerView.ViewHolder(view) {
@@ -26,9 +26,9 @@ class ArtistsAdapter(context: Context) : RecyclerView.Adapter<ArtistsAdapter.Vie
 
         fun bindView(artist: Artist, num: Int) {
             nameView.text = artist.name
-            timesPlayedView.text= "${artist.playcount} Times played"
-            listenersView.text = "${artist.listeners} listeners"
-            topView.text = "#$num"
+            timesPlayedView.text= context.getString(R.string.artist_playcounter, artist.playcount)
+            listenersView.text = context.getString(R.string.artist_listeners, artist.listeners)
+            topView.text = context.getString(R.string.artist_top_number, num)
             Picasso.get().load(artist.getImage(Artist.IMAGE_MEDIUM)).into(imageView)
 
         }
