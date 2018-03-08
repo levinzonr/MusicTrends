@@ -15,6 +15,10 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), ArtistsAdapter.ArtistAdapterListener {
 
+    companion object {
+        const val EXTRA_ARTIST = "Artist"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -39,6 +43,7 @@ class MainActivity : AppCompatActivity(), ArtistsAdapter.ArtistAdapterListener {
 
     override fun onArtistSelected(artist: Artist) {
         val intent = Intent(this, ArtistDetailActivity::class.java)
+        intent.putExtra(EXTRA_ARTIST, artist)
         startActivity(intent)
     }
 }
