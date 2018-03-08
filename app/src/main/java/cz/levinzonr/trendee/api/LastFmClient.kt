@@ -3,7 +3,7 @@ package cz.levinzonr.trendee.api
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import cz.levinzonr.trendee.model.Artist
+import cz.levinzonr.trendee.model.ArtistResponse
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -30,15 +30,16 @@ class LastFmClient {
         const val API_KEY = "0b3c38cc4001ab622a02719ef52b0563"
 
         var instance: LastFmClient? = null
-            get() {
-                if (field == null) {
-                    field = LastFmClient()
-                }
-                return field
+
+        fun instance(): LastFmClient {
+            if (instance == null) {
+                instance = LastFmClient()
             }
+            return instance as LastFmClient
+        }
     }
 
-    fun getTrendingArtists(): Observable<List<Artist>> {
+    fun getTrendingArtists(): Observable<ArtistResponse> {
         return service.getTrendingArtists()
     }
 
