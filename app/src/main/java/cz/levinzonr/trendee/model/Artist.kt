@@ -20,6 +20,19 @@ class Artist( val name : String,
                  bio: Bio
                 ) : this (name, playcount, listeners, mbid, images)
 
+
+    companion object {
+        const val IMAGE_SMALL = 0
+        const val IMAGE_MEDIUM = 1
+        const val IMAGE_LARGE = 2
+        const val IMAGE_XLARGE = 3
+        const val IMAGE_MEGA = 4
+    }
+
+    fun getImage(size: Int = 0) :  String {
+        return images[size].link
+    }
+
     inner class ArtistImage(@SerializedName("#text")val link: String, val size: String) {
         override fun toString(): String {
             return "ArtistImage(link='$link', size='$size')"

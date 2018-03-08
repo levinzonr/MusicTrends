@@ -6,8 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import com.squareup.picasso.Picasso
 import cz.levinzonr.trendee.R
 import cz.levinzonr.trendee.model.Artist
+import de.hdodenhof.circleimageview.CircleImageView
 
 /**
  * Created by nomers on 3/8/18.
@@ -17,9 +19,18 @@ class ArtistsAdapter(context: Context) : RecyclerView.Adapter<ArtistsAdapter.Vie
     private val items: ArrayList<Artist> = ArrayList()
     inner class ViewHolder(view:View) : RecyclerView.ViewHolder(view) {
         private val nameView: TextView = view.findViewById(R.id.artist_name)
+        private val imageView: CircleImageView = view.findViewById(R.id.artist_image)
+        private val timesPlayedView: TextView = view.findViewById(R.id.artist_playcount)
+        private val listenersView: TextView = view.findViewById(R.id.artist_listeners)
+        private val topView: TextView = view.findViewById(R.id.artist_top)
 
-        fun bindView(artist: Artist) {
+        fun bindView(artist: Artist, num: Int) {
             nameView.text = artist.name
+            timesPlayedView.text= "${artist.playcount} Times played"
+            listenersView.text = "${artist.listeners} listeners"
+            topView.text = "#$num"
+            Picasso.get().load(artist.getImage(Artist.IMAGE_MEDIUM)).into(imageView)
+
         }
 
     }
@@ -34,7 +45,7 @@ class ArtistsAdapter(context: Context) : RecyclerView.Adapter<ArtistsAdapter.Vie
     }
 
     override fun onBindViewHolder(holder: ViewHolder?, position: Int) {
-        holder?.bindView(items[position])
+        holder?.bindView(items[position], position+1)
     }
 
     fun addItems(list : List<Artist>) {
