@@ -12,6 +12,7 @@
         android:layout_height="wrap_content" />
 
     <TextView
+        android:id="@+id/artist_name"
         android:layout_margin="@dimen/fab_margin"
         android:text="@string/sample_artist_name"
         android:textStyle="bold"
@@ -20,6 +21,7 @@
         android:layout_height="wrap_content" />
 
     <TextView
+        android:id="@+id/artist_bio"
         android:layout_margin="@dimen/fab_margin"
         android:text="@string/sample_artist_bio"
         android:layout_width="match_parent"
