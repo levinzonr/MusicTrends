@@ -3,10 +3,14 @@ package cz.levinzonr.trendee.screens.artistslist
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import butterknife.BindView
+import butterknife.ButterKnife
 
 import cz.levinzonr.trendee.R
 import cz.levinzonr.trendee.model.Artist
@@ -24,7 +28,10 @@ class ArtistsListFragment : Fragment(), ViewCallbacks<List<Artist>>{
         const val TAG = "ArtistListFragment"
     }
 
+    private lateinit var adapter: ArtistsAdapter
     private lateinit var presenter: ArtistListPresenter
+
+    @BindView(R.id.recycler_view)  lateinit var recyclerView : RecyclerView
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -32,7 +39,18 @@ class ArtistsListFragment : Fragment(), ViewCallbacks<List<Artist>>{
         presenter = ArtistListPresenter()
         presenter.attachView(this)
         presenter.fetchTrendingPage()
-        return inflater!!.inflate(R.layout.fragment_artists_list, container, false)
+        val view =  inflater!!.inflate(R.layout.fragment_artists_list, container, false)
+        ButterKnife.setDebug(true)
+        ButterKnife.bind(this, view)
+        recyclerViewSetUp()
+        return view
+
+    }
+
+    private fun recyclerViewSetUp() {
+        adapter = ArtistsAdapter(context)
+        recyclerView.layoutManager = LinearLayoutManager(context)
+        recyclerView.adapter = adapter
     }
 
     override fun onLoadingStart() {
@@ -41,6 +59,7 @@ class ArtistsListFragment : Fragment(), ViewCallbacks<List<Artist>>{
 
     override fun onLoadingFinished(result: List<Artist>) {
         Log.d(TAG, "Loading finished: $result")
+        adapter.addItems(result)
     }
 
     override fun onError() {

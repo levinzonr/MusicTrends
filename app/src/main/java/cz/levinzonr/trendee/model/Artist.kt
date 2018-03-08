@@ -5,10 +5,10 @@ import com.google.gson.annotations.SerializedName
 /**
  * Created by levinrom on 3/7/18.
  */
-class Artist(private val name : String,
-             private val playcount: Int,
-             private val listeners: Int,
-             private val mbid: String,
+class Artist( val name : String,
+              val playcount: Int,
+              val listeners: Int,
+              val mbid: String,
              @SerializedName("image") private val images: ArrayList<ArtistImage>){
 
     constructor(name: String,
