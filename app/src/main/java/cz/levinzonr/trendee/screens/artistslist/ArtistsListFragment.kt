@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import butterknife.BindView
 import butterknife.ButterKnife
 
@@ -32,16 +33,17 @@ class ArtistsListFragment : Fragment(), ViewCallbacks<List<Artist>>{
     private lateinit var presenter: ArtistListPresenter
 
     @BindView(R.id.recycler_view)  lateinit var recyclerView : RecyclerView
+    @BindView(R.id.progress_indicator) lateinit var progressBar: ProgressBar
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        presenter = ArtistListPresenter()
-        presenter.attachView(this)
-        presenter.fetchTrendingPage()
         val view =  inflater!!.inflate(R.layout.fragment_artists_list, container, false)
         ButterKnife.setDebug(true)
         ButterKnife.bind(this, view)
+        presenter = ArtistListPresenter()
+        presenter.attachView(this)
+        presenter.fetchTrendingPage()
         recyclerViewSetUp()
         return view
 
@@ -55,15 +57,20 @@ class ArtistsListFragment : Fragment(), ViewCallbacks<List<Artist>>{
 
     override fun onLoadingStart() {
         Log.d(TAG, "Loading start")
+        progressBar.visibility = View.VISIBLE
+        recyclerView.visibility = View.GONE
     }
 
     override fun onLoadingFinished(result: List<Artist>) {
         Log.d(TAG, "Loading finished: $result")
         adapter.addItems(result)
+        progressBar.visibility = View.GONE
+        recyclerView.visibility = View.VISIBLE
     }
 
     override fun onError() {
         Log.d(TAG, "Error")
+        progressBar.visibility = View.GONE
     }
 
     override fun onDestroy() {
