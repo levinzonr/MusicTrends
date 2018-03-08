@@ -53,6 +53,7 @@ class ArtistsListFragment : Fragment(), ViewCallbacks<List<Artist>>{
         adapter = ArtistsAdapter(context)
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = adapter
+        recyclerView.addItemDecoration(VerticalSpaceDecoration())
     }
 
     override fun onLoadingStart() {
