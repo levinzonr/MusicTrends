@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import com.squareup.picasso.Picasso
 import cz.levinzonr.trendee.R
 import cz.levinzonr.trendee.model.Artist
@@ -14,10 +15,16 @@ import de.hdodenhof.circleimageview.CircleImageView
 /**
  * Created by nomers on 3/8/18.
  */
-class ArtistsAdapter(val context: Context) : RecyclerView.Adapter<ArtistsAdapter.ViewHolder>(){
+class ArtistsAdapter(val context: Context, val listener : ArtistAdapterListener) : RecyclerView.Adapter<ArtistsAdapter.ViewHolder>(){
     private val inflater : LayoutInflater = LayoutInflater.from(context)
     private val items: ArrayList<Artist> = ArrayList()
-    inner class ViewHolder(view:View) : RecyclerView.ViewHolder(view) {
+
+    interface ArtistAdapterListener {
+        fun onArtistSelected(artist: Artist)
+    }
+
+    inner class ViewHolder(val view:View) : RecyclerView.ViewHolder(view) {
+
         private val nameView: TextView = view.findViewById(R.id.artist_name)
         private val imageView: CircleImageView = view.findViewById(R.id.artist_image)
         private val timesPlayedView: TextView = view.findViewById(R.id.artist_playcount)
@@ -25,6 +32,11 @@ class ArtistsAdapter(val context: Context) : RecyclerView.Adapter<ArtistsAdapter
         private val topView: TextView = view.findViewById(R.id.artist_top)
 
         fun bindView(artist: Artist, num: Int) {
+
+            view.setOnClickListener {
+                listener.onArtistSelected(artist)
+            }
+
             nameView.text = artist.name
             timesPlayedView.text= context.getString(R.string.artist_playcounter, artist.playcount)
             listenersView.text = context.getString(R.string.artist_listeners, artist.listeners)

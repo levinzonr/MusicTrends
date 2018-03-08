@@ -50,7 +50,7 @@ class ArtistsListFragment : Fragment(), ViewCallbacks<List<Artist>>{
     }
 
     private fun recyclerViewSetUp() {
-        adapter = ArtistsAdapter(context)
+        adapter = ArtistsAdapter(context, context as ArtistsAdapter.ArtistAdapterListener)
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = adapter
         recyclerView.addItemDecoration(VerticalSpaceDecoration())
