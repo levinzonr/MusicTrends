@@ -14,8 +14,8 @@ class Artist(val name: String,
              val url: String,
              @SerializedName("image") private val images: ArrayList<ArtistImage>?) : Parcelable {
 
-    val ontour : Boolean? = null
-    val bio : Biography? = null
+    var ontour : Int = 0
+    var bio : Biography? = null
 
     inner class Biography(val published : String, val summary : String, val content: String)
 

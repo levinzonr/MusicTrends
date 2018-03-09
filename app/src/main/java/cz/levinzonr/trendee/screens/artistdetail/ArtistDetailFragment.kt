@@ -5,11 +5,10 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.CardView
 import android.util.Log
 import android.view.*
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.squareup.picasso.Picasso
@@ -33,11 +32,17 @@ class ArtistDetailFragment : Fragment(), ViewCallbacks<Artist>{
         const val TAG = "ArtistDetailFragment"
     }
 
-    @BindView(R.id.artist_bio) lateinit var artistBio: TextView
+    @BindView(R.id.artist_summary) lateinit var artistSummaryTextView: TextView
+    @BindView(R.id.artist_ontour_label) lateinit var onTourLabel : TextView
+    @BindView(R.id.artist_content) lateinit var artistAbout : TextView
+
+    @BindView(R.id.progress_indicator) lateinit var progressBar: ProgressBar
+    @BindView(R.id.detail_layout) lateinit var detailLayout: LinearLayout
+
     @BindView(R.id.artist_playcount) lateinit var playcountTextView: TextView
     @BindView(R.id.artist_listeners) lateinit var listenersTextView: TextView
 
-    lateinit var presenter: ArtistDetailPresenter
+    private lateinit var presenter: ArtistDetailPresenter
     lateinit var artist: Artist
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
@@ -75,16 +80,26 @@ class ArtistDetailFragment : Fragment(), ViewCallbacks<Artist>{
 
     override fun onLoadingStart() {
         Log.d(TAG, "Started loading")
-
+        detailLayout.visibility = View.GONE
+        progressBar.visibility = View.VISIBLE
     }
 
     override fun onLoadingFinished(result: Artist) {
-        Log.d(TAG, "Finsished ${result.bio?.summary}")
+        detailLayout.visibility = View.VISIBLE
+        progressBar.visibility = View.GONE
+        artistAbout.text = result.bio?.content
 
+        artistSummaryTextView.text = result.bio?.summary
+        if (result.ontour == 1) {
+            onTourLabel.visibility = View.VISIBLE
+        }
     }
 
     override fun onError() {
-        Log.d(TAG, "Error")
+        Log.d(TAG, "Error: ${artist.mbid}")
+        detailLayout.visibility = View.VISIBLE
+        onTourLabel.visibility = View.GONE
+        progressBar.visibility = View.GONE
     }
 
     private fun updateViews(artist: Artist) {
