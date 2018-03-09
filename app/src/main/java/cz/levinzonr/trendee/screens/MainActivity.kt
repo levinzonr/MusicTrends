@@ -24,18 +24,6 @@ class MainActivity : AppCompatActivity(), ArtistsAdapter.ArtistAdapterListener {
         setSupportActionBar(toolbar)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.action_settings -> true
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
-
     override fun onArtistSelected(artist: Artist) {
         val intent = Intent(this, ArtistDetailActivity::class.java)
         intent.putExtra(EXTRA_ARTIST, artist)
