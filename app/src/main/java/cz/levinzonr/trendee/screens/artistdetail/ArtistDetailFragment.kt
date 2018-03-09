@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
@@ -15,28 +16,38 @@ import com.squareup.picasso.Picasso
 
 import cz.levinzonr.trendee.R
 import cz.levinzonr.trendee.model.Artist
+import cz.levinzonr.trendee.presenter.ArtistDetailPresenter
+import cz.levinzonr.trendee.presenter.Presenter
 import cz.levinzonr.trendee.screens.MainActivity
+import cz.levinzonr.trendee.screens.ViewCallbacks
 import de.hdodenhof.circleimageview.CircleImageView
 
 
 /**
  * A simple [Fragment] subclass.
  */
-class ArtistDetailFragment : Fragment() {
+class ArtistDetailFragment : Fragment(), ViewCallbacks<Artist>{
 
+
+    companion object {
+        const val TAG = "ArtistDetailFragment"
+    }
 
     @BindView(R.id.artist_bio) lateinit var artistBio: TextView
     @BindView(R.id.artist_playcount) lateinit var playcountTextView: TextView
     @BindView(R.id.artist_listeners) lateinit var listenersTextView: TextView
+
+    lateinit var presenter: ArtistDetailPresenter
     lateinit var artist: Artist
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val artist = activity.intent.getParcelableExtra<Artist>(MainActivity.EXTRA_ARTIST)
-        Toast.makeText(context, artist.toString(), Toast.LENGTH_SHORT).show()
         val view =  inflater!!.inflate(R.layout.fragment_artist_detail, container, false)
         ButterKnife.bind(this, view)
+        presenter = ArtistDetailPresenter()
+        presenter.attachView(this)
         updateViews(artist)
         setHasOptionsMenu(true)
         return view
@@ -62,11 +73,30 @@ class ArtistDetailFragment : Fragment() {
         }
     }
 
+    override fun onLoadingStart() {
+        Log.d(TAG, "Started loading")
+
+    }
+
+    override fun onLoadingFinished(result: Artist) {
+        Log.d(TAG, "Finsished ${result.bio?.summary}")
+
+    }
+
+    override fun onError() {
+        Log.d(TAG, "Error")
+    }
+
     private fun updateViews(artist: Artist) {
         this.artist = artist
         listenersTextView.text = getString(R.string.artist_listeners, this.artist.listeners)
         playcountTextView.text = getString(R.string.artist_playcounter, this.artist.playcount)
+        presenter.fetchArtistDetail(artist.mbid)
+    }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.detachView()
     }
 
 }// Required empty public constructor
