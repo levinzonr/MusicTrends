@@ -16,6 +16,9 @@
     <string name="artist_summary_title">Summary</string>
     <string name="artist_content_title">About</string>
     <string name="artist_ontour">On Tour</string>
+    <string name="error_message">An error has occured</string>
+    <string name="error_network">Couldn\'t connect to the internet</string>
+    <string name="action_retry">Retry</string>
 
 
 </resources>

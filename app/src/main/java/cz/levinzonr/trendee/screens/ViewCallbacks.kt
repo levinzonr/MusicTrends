@@ -7,5 +7,5 @@ interface ViewCallbacks<in V> {
 
     fun onLoadingStart()
     fun onLoadingFinished(result: V)
-    fun onError()
+    fun onError(msg : String)
 }

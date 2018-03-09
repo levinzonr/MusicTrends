@@ -1,11 +1,14 @@
 package cz.levinzonr.trendee.presenter
 
+import android.content.Context
 import android.util.Log
+import cz.levinzonr.trendee.R
 import cz.levinzonr.trendee.api.LastFmClient
 import cz.levinzonr.trendee.model.Artist
 import cz.levinzonr.trendee.model.ArtistResponse
 import cz.levinzonr.trendee.screens.ViewCallbacks
 import cz.levinzonr.trendee.screens.artistslist.ArtistsListFragment
+import rx.Scheduler
 import rx.Subscriber
 import rx.Subscription
 import rx.android.schedulers.AndroidSchedulers
@@ -23,7 +26,7 @@ class ArtistListPresenter : Presenter<ViewCallbacks<List<Artist>>>, Subscriber<A
     private var view: ViewCallbacks<List<Artist>>?= null
     private var subscription: Subscription? = null
     private lateinit var items: List<Artist>
-
+    private var scheduler: Scheduler? = null
 
     override fun attachView(view: ViewCallbacks<List<Artist>>) {
         this.view = view
@@ -36,9 +39,12 @@ class ArtistListPresenter : Presenter<ViewCallbacks<List<Artist>>>, Subscriber<A
     fun fetchTrendingPage(){
         subscription?.unsubscribe()
         view?.onLoadingStart()
+        if (scheduler == null ) {
+            scheduler = Schedulers.io()
+        }
         subscription = LastFmClient.instance().getTrendingArtists()
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
+                .subscribeOn(scheduler)
                 .subscribe(this)
 
 
@@ -60,7 +66,7 @@ class ArtistListPresenter : Presenter<ViewCallbacks<List<Artist>>>, Subscriber<A
     }
 
     override fun onError(e: Throwable?) {
-        view?.onError()
+        view?.onError(e.toString())
         Log.d(TAG, e.toString())
     }
 }

@@ -50,11 +50,13 @@ class ArtistDetailPresenter : Presenter<ViewCallbacks<Artist>>, Subscriber<Artis
 
     override fun onError(e: Throwable?) {
         Log.d(TAG, "onError: $e")
-        view?.onError()
+        view?.onError(e.toString())
     }
 
     override fun detachView() {
         view = null
         subscription?.unsubscribe()
     }
+
+
 }

@@ -11,6 +11,7 @@ import android.view.*
 import android.widget.*
 import butterknife.BindView
 import butterknife.ButterKnife
+import butterknife.OnClick
 import com.squareup.picasso.Picasso
 
 import cz.levinzonr.trendee.R
@@ -37,6 +38,8 @@ class ArtistDetailFragment : Fragment(), ViewCallbacks<Artist>{
 
     @BindView(R.id.progress_indicator) lateinit var progressBar: ProgressBar
     @BindView(R.id.detail_layout) lateinit var detailLayout: LinearLayout
+    @BindView(R.id.error_cotainer) lateinit var errorLayout: LinearLayout
+    @BindView(R.id.error_message) lateinit var errorMessage: TextView
 
     @BindView(R.id.artist_playcount) lateinit var playcountTextView: TextView
     @BindView(R.id.artist_listeners) lateinit var listenersTextView: TextView
@@ -81,28 +84,40 @@ class ArtistDetailFragment : Fragment(), ViewCallbacks<Artist>{
         Log.d(TAG, "Started loading")
         detailLayout.visibility = View.GONE
         progressBar.visibility = View.VISIBLE
+        errorLayout.visibility = View.GONE
     }
 
     override fun onLoadingFinished(result: Artist) {
         detailLayout.visibility = View.VISIBLE
         progressBar.visibility = View.GONE
+        errorLayout.visibility = View.GONE
         artistAbout.text = result.bio?.content
         if (result.ontour == 1) {
             onTourLabel.visibility = View.VISIBLE
         }
     }
 
-    override fun onError() {
+    override fun onError(msg : String) {
         Log.d(TAG, "Error: ${artist.mbid}")
-        detailLayout.visibility = View.VISIBLE
+        detailLayout.visibility = View.GONE
         onTourLabel.visibility = View.GONE
         progressBar.visibility = View.GONE
+        errorLayout.visibility = View.VISIBLE
+        errorMessage.text = msg
+
     }
 
     private fun updateViews(artist: Artist) {
         this.artist = artist
         listenersTextView.text = getString(R.string.artist_listeners, this.artist.listeners)
         playcountTextView.text = getString(R.string.artist_playcounter, this.artist.playcount)
+        presenter.fetchArtistDetail(artist.mbid)
+    }
+
+    @OnClick(R.id.button_retry)
+    fun retry(){
+        presenter = ArtistDetailPresenter()
+        presenter.attachView(this)
         presenter.fetchArtistDetail(artist.mbid)
     }
 
