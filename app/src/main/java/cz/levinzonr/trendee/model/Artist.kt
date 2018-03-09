@@ -14,6 +14,11 @@ class Artist(val name: String,
              val url: String,
              @SerializedName("image") private val images: ArrayList<ArtistImage>?) : Parcelable {
 
+    val ontour : Boolean? = null
+    val bio : Biography? = null
+
+    inner class Biography(val published : String, val summary : String, val content: String)
+
     constructor(parcel: Parcel) : this(
             parcel.readString(),
             parcel.readInt(),
@@ -24,27 +29,10 @@ class Artist(val name: String,
             )
 
 
-    constructor(name: String,
-                playcount: Int,
-                listeners: Int,
-                mbid: String,
-                url: String,
-                images: ArrayList<ArtistImage>,
-                ontour: Int,
-                bio: Bio
-    ) : this(name, playcount, listeners, mbid, url, images)
-
-
     fun getImage(size: Int = 0): String {
         if (images != null ) return images[size].link
         return name
     }
-
-
-    inner class Bio(val published: String, val summary: String,  val content: String)
-
-
-
 
     companion object {
 
@@ -83,9 +71,6 @@ class Artist(val name: String,
     override fun describeContents(): Int {
         return 0
     }
-
-
-
 }
 
 private fun Parcel.readList(list: ArrayList<ArtistImage>) : ArrayList<ArtistImage> {
