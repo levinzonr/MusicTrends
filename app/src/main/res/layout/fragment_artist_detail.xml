@@ -79,33 +79,6 @@
             android:textSize="17sp"
             android:textStyle="bold"
             android:layout_width="wrap_content"
-            android:text="@string/artist_summary_title"
-            android:layout_height="wrap_content" />
-
-        <android.support.v7.widget.CardView
-            android:visibility="visible"
-            android:layout_margin="@dimen/fab_margin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-
-            <TextView
-                android:id="@+id/artist_summary"
-                android:layout_margin="@dimen/fab_margin"
-                android:text="@string/app_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-        </android.support.v7.widget.CardView>
-
-
-        <TextView
-            android:visibility="visible"
-            android:layout_marginLeft="@dimen/fab_margin"
-            android:layout_marginStart="@dimen/fab_margin"
-            android:textSize="17sp"
-            android:textStyle="bold"
-            android:layout_width="wrap_content"
             android:text="@string/artist_content_title"
             android:layout_height="wrap_content" />
 
@@ -122,6 +95,8 @@
                 android:text="@string/app_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
+
+
 
         </android.support.v7.widget.CardView>
 

@@ -32,7 +32,6 @@ class ArtistDetailFragment : Fragment(), ViewCallbacks<Artist>{
         const val TAG = "ArtistDetailFragment"
     }
 
-    @BindView(R.id.artist_summary) lateinit var artistSummaryTextView: TextView
     @BindView(R.id.artist_ontour_label) lateinit var onTourLabel : TextView
     @BindView(R.id.artist_content) lateinit var artistAbout : TextView
 
@@ -88,8 +87,6 @@ class ArtistDetailFragment : Fragment(), ViewCallbacks<Artist>{
         detailLayout.visibility = View.VISIBLE
         progressBar.visibility = View.GONE
         artistAbout.text = result.bio?.content
-
-        artistSummaryTextView.text = result.bio?.summary
         if (result.ontour == 1) {
             onTourLabel.visibility = View.VISIBLE
         }
