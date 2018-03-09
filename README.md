@@ -1,5 +1,5 @@
 # Trendee
-Simple app with MVP architecture that downloads and displays a top 50 trending artists from a [Last.fm]() API
+Simple app with MVP architecture that downloads and displays a top 50 trending artists from a [Last.fm](http://last.fm/) API
 
 
 
