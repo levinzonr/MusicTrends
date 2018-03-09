@@ -1,7 +1,5 @@
 package cz.levinzonr.trendee.presenter
 
-import android.view.View
-
 /**
  * Created by nomers on 3/8/18.
  */

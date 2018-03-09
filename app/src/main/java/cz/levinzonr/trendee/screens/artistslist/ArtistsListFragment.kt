@@ -2,7 +2,6 @@ package cz.levinzonr.trendee.screens.artistslist
 
 
 import android.os.Bundle
-import android.os.Message
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -16,12 +15,10 @@ import android.widget.TextView
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
-
 import cz.levinzonr.trendee.R
 import cz.levinzonr.trendee.model.Artist
 import cz.levinzonr.trendee.presenter.ArtistListPresenter
 import cz.levinzonr.trendee.screens.ViewCallbacks
-import java.time.LocalDate
 
 
 /**

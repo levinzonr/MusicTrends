@@ -1,9 +1,7 @@
 package cz.levinzonr.trendee.api
 
-import cz.levinzonr.trendee.model.Artist
 import cz.levinzonr.trendee.model.ArtistResponse
 import retrofit2.http.GET
-import retrofit2.http.Path
 import retrofit2.http.Query
 import rx.Observable
 

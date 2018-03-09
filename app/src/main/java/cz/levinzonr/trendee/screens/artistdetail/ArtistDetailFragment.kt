@@ -5,22 +5,18 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.widget.CardView
 import android.util.Log
 import android.view.*
 import android.widget.*
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
-import com.squareup.picasso.Picasso
 
 import cz.levinzonr.trendee.R
 import cz.levinzonr.trendee.model.Artist
 import cz.levinzonr.trendee.presenter.ArtistDetailPresenter
-import cz.levinzonr.trendee.presenter.Presenter
 import cz.levinzonr.trendee.screens.MainActivity
 import cz.levinzonr.trendee.screens.ViewCallbacks
-import de.hdodenhof.circleimageview.CircleImageView
 
 
 /**

@@ -1,13 +1,10 @@
 package cz.levinzonr.trendee.presenter
 
-import android.content.Context
 import android.util.Log
-import cz.levinzonr.trendee.R
 import cz.levinzonr.trendee.api.LastFmClient
 import cz.levinzonr.trendee.model.Artist
 import cz.levinzonr.trendee.model.ArtistResponse
 import cz.levinzonr.trendee.screens.ViewCallbacks
-import cz.levinzonr.trendee.screens.artistslist.ArtistsListFragment
 import rx.Scheduler
 import rx.Subscriber
 import rx.Subscription
