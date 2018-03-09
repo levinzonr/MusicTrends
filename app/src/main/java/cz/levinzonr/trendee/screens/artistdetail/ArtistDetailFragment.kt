@@ -25,8 +25,6 @@ import de.hdodenhof.circleimageview.CircleImageView
 class ArtistDetailFragment : Fragment() {
 
 
-    @BindView(R.id.artist_image) lateinit var artistImage: ImageView
-    @BindView(R.id.artist_name) lateinit var artistName: TextView
     @BindView(R.id.artist_bio) lateinit var artistBio: TextView
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
@@ -41,8 +39,7 @@ class ArtistDetailFragment : Fragment() {
     }
 
     private fun updateViews(artist: Artist) {
-        Picasso.get().load(artist.getImage(Artist.IMAGE_MEGA)).into(artistImage)
-        artistName.text = artist.name
+
     }
 
 }// Required empty public constructor
