@@ -27,3 +27,5 @@ local.properties
 .idea/vcs.xml
 *.iml
 /build/
+/.idea/markdown-navigator/
+/.idea/markdown-navigator.xml
