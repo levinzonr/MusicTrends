@@ -15,7 +15,7 @@ import rx.Observable
 class LastFmClient {
 
     private val gson: Gson =
-            GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.IDENTITY).create()
+            GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.IDENTITY).setLenient().create()
 
     private val retrofit : Retrofit  = Retrofit.Builder()
             .baseUrl(ROOT_URL)
@@ -41,6 +41,10 @@ class LastFmClient {
 
     fun getTrendingArtists(): Observable<ArtistResponse> {
         return service.getTrendingArtists()
+    }
+
+    fun getArtistDetail(artistId: String) : Observable<ArtistResponse> {
+        return service.getArtistInfo(artistId)
     }
 
 }
