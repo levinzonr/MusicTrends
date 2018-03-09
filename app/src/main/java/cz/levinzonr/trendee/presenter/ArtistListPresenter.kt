@@ -34,9 +34,7 @@ class ArtistListPresenter : Presenter<ViewCallbacks<List<Artist>>>, Subscriber<A
     }
 
     fun fetchTrendingPage(){
-        if (subscription != null){
-            subscription?.unsubscribe()
-        }
+        subscription?.unsubscribe()
         view?.onLoadingStart()
         subscription = LastFmClient.instance().getTrendingArtists()
                 .observeOn(AndroidSchedulers.mainThread())
@@ -48,7 +46,8 @@ class ArtistListPresenter : Presenter<ViewCallbacks<List<Artist>>>, Subscriber<A
 
     override fun onNext(t: ArtistResponse?) {
         if (t != null) {
-            this.items = t.artists.artist
+            this.items = t.artists!!.artist
+            Log.d(TAG, this.items.toString())
         } else {
             Log.d(TAG, "responce null")
 
