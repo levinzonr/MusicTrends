@@ -1,11 +1,11 @@
 package cz.levinzonr.trendee.screens.artistdetail
 
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -26,6 +26,7 @@ class ArtistDetailFragment : Fragment() {
 
 
     @BindView(R.id.artist_bio) lateinit var artistBio: TextView
+    lateinit var artist: Artist
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -35,11 +36,32 @@ class ArtistDetailFragment : Fragment() {
         val view =  inflater!!.inflate(R.layout.fragment_artist_detail, container, false)
         ButterKnife.bind(this, view)
         updateViews(artist)
+        setHasOptionsMenu(true)
         return view
     }
 
-    private fun updateViews(artist: Artist) {
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater?.inflate(R.menu.menu_artist_detail, menu)
+    }
 
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        return when(item?.itemId) {
+            R.id.menu_item_in_browser -> {
+                val intent = Intent()
+                intent.action = Intent.ACTION_VIEW
+                intent.data = Uri.parse(artist.url)
+                startActivity(intent)
+                true
+            }
+            else -> {
+                false
+            }
+        }
+    }
+
+    private fun updateViews(artist: Artist) {
+        this.artist = artist
     }
 
 }// Required empty public constructor

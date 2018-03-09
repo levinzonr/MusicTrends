@@ -11,12 +11,14 @@ class Artist(val name: String,
              val playcount: Int,
              val listeners: Int,
              val mbid: String,
+             val url: String,
              @SerializedName("image") private val images: ArrayList<ArtistImage>?) : Parcelable {
 
     constructor(parcel: Parcel) : this(
             parcel.readString(),
             parcel.readInt(),
             parcel.readInt(),
+            parcel.readString(),
             parcel.readString(),
             parcel.readList(ArrayList<ArtistImage>())
             )
@@ -26,10 +28,11 @@ class Artist(val name: String,
                 playcount: Int,
                 listeners: Int,
                 mbid: String,
+                url: String,
                 images: ArrayList<ArtistImage>,
                 ontour: Int,
                 bio: Bio
-    ) : this(name, playcount, listeners, mbid, images)
+    ) : this(name, playcount, listeners, mbid, url, images)
 
 
     fun getImage(size: Int = 0): String {
@@ -73,6 +76,7 @@ class Artist(val name: String,
         parcel.writeInt(playcount)
         parcel.writeInt(listeners)
         parcel.writeString(mbid)
+        parcel.writeString(url)
         parcel.writeList(images)
     }
 

@@ -5,6 +5,7 @@ import android.support.design.widget.CollapsingToolbarLayout
 import android.support.design.widget.Snackbar
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.widget.ImageView
 import butterknife.BindView
 import butterknife.ButterKnife
