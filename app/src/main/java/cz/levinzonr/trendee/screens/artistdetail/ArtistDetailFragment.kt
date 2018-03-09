@@ -26,6 +26,8 @@ class ArtistDetailFragment : Fragment() {
 
 
     @BindView(R.id.artist_bio) lateinit var artistBio: TextView
+    @BindView(R.id.artist_playcount) lateinit var playcountTextView: TextView
+    @BindView(R.id.artist_listeners) lateinit var listenersTextView: TextView
     lateinit var artist: Artist
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
@@ -62,6 +64,9 @@ class ArtistDetailFragment : Fragment() {
 
     private fun updateViews(artist: Artist) {
         this.artist = artist
+        listenersTextView.text = getString(R.string.artist_listeners, this.artist.listeners)
+        playcountTextView.text = getString(R.string.artist_playcounter, this.artist.playcount)
+
     }
 
 }// Required empty public constructor
